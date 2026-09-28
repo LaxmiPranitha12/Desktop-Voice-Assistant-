@@ -3,6 +3,7 @@
 Main entry point for starting the voice assistant application.
 """
 
+import argparse
 import sys
 from src.config.settings import settings
 from src.core.assistant import VoiceAssistant
@@ -22,17 +23,30 @@ def print_banner() -> None:
 
 def main() -> int:
     """Application main execution function."""
+    parser = argparse.ArgumentParser(description="PBL Project - Desktop Voice Assistant")
+    parser.add_argument(
+        "--once",
+        action="store_true",
+        help="Run a single listen-and-respond cycle instead of continuous loop.",
+    )
+    args = parser.parse_args()
+
     logger = setup_logger("Main", level=settings.log_level)
     print_banner()
 
-    logger.info("Bootstrapping PBL Project foundation...")
+    logger.info("Initializing voice assistant...")
     assistant = VoiceAssistant()
 
     try:
-        assistant.start()
-        logger.info("Project foundation verified successfully.")
+        if args.once:
+            assistant.start()
+            logger.info("Running single test cycle...")
+            assistant.listen_and_respond()
+            assistant.stop()
+        else:
+            assistant.run()
     except KeyboardInterrupt:
-        logger.info("Interruption received. Shutting down...")
+        logger.info("Shutdown requested via KeyboardInterrupt.")
     finally:
         assistant.stop()
 

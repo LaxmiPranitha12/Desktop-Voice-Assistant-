@@ -28,7 +28,12 @@ class Settings:
     environment: str = os.getenv("ENVIRONMENT", "development")
     log_level: str = os.getenv("LOG_LEVEL", "INFO")
     
-    # Audio & Speech defaults (for upcoming modules)
+    # Audio & Speech defaults
+    audio_device_index: int | None = (
+        int(os.getenv("AUDIO_INPUT_DEVICE_INDEX"))
+        if os.getenv("AUDIO_INPUT_DEVICE_INDEX") and os.getenv("AUDIO_INPUT_DEVICE_INDEX").strip().isdigit()
+        else None
+    )
     speech_timeout: int = int(os.getenv("SPEECH_RECOGNITION_TIMEOUT", "5"))
     tts_voice_rate: int = int(os.getenv("TTS_VOICE_RATE", "175"))
     tts_volume: float = float(os.getenv("TTS_VOLUME", "1.0"))

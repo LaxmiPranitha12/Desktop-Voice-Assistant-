@@ -1,8 +1,10 @@
-# PBL Project - Core Dependencies
+# PBL Project - Dependencies
 # Python 3.11+
 
 # Environment & Configuration Management
 python-dotenv>=1.0.0
 
-# Note: Additional dependencies (Speech Recognition, TTS, Automation, UI)
-# will be introduced incrementally during their respective development phases.
+# Voice Foundation (Phase 2)
+SpeechRecognition>=3.10.0
+PyAudio>=0.2.14
+pyttsx3>=2.90
